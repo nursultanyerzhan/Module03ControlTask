@@ -1,7 +1,13 @@
 export const tbodyElement = document.querySelector('tbody');
-export const overlayElement = document.querySelector('.overlay');
+export const overlayElement = document.querySelector('#modalAdd');
+export const overlayModalDeleteElement = document.querySelector('#modalDelete');
+export const overlayModalEditElement = document.querySelector('#modalChange');
 export const addButtonElement = document.querySelector('.panel__add-goods');
 export const modal__form = document.querySelector('.modal__form');
 export const modal__close = document.querySelector('.modal__close');
+export const errorModal__close = document.querySelector('.errorModal__close');
+export const errorModal = document.querySelector('.errorModal');
+export const modalDelete__close = document.querySelector('.modalDelete__close');
+export const modalEdit__close = document.querySelector('.modalEdit__close');
 export const vendorCode_Id = document.querySelector('.vendor-code__id');
 export const crmTotalPrice = document.querySelector('.crm__total-price');

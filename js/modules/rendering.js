@@ -3,8 +3,8 @@ import { createRow, addToBody } from './addElemetsToPage.js';
 
 export const computeTotalPriceOfGoods = goods => {
     let totalPriceOfGoods = goods.reduce((total, item) => {
-        if (!Number.isNaN(item.discont)) {
-            return total + (item.price * item.count - item.discont);
+        if (!Number.isNaN(item.discount)) {
+            return total + (item.price * item.count - item.discount);
         }
         else return total + (item.price * item.count);
     }, 0);

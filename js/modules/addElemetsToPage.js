@@ -5,7 +5,7 @@ export const createRow = (goodNumber, goodObject) => {
   <tr>
     <td class="table__cell ">${goodNumber}</td>
     <td class="table__cell table__cell_left table__cell_name" data-id="${goodObject.id}">
-        <span class="table__cell-id">id: ${goodObject.id}</span>${goodObject.name}</td>
+        <span class="table__cell-id">id: ${goodObject.id}</span>${goodObject.title}</td>
     <td class="table__cell table__cell_left">${goodObject.category}</td>
     <td class="table__cell">${goodObject.units}</td>
     <td class="table__cell">${goodObject.count}</td>
