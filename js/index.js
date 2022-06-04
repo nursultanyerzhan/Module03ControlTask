@@ -16,6 +16,9 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
             }).catch((err) => console.log(err));
     };
 
+    let selectedImageAddBase64 = '';
+    let selectedImageChangeBase64 = '';
+
     const addButton = pageElements.addButtonElement;
     addButton.addEventListener('click', () => {
         const overlay = pageElements.overlayElement;
@@ -37,6 +40,8 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
     const closeEditModal = () => {
         const overlay = pageElements.overlayModalEditElement;
         overlay.classList.remove('active');
+        const img_wrapper = document.querySelector('#img_wrapperEdit');
+        img_wrapper.textContent = '';
     };
 
     const closeButton = pageElements.modal__close;
@@ -146,7 +151,8 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
                         e.preventDefault();
                         const changedObject = Object.fromEntries(new FormData(editGoodsForm));
                         changedObject.discount = changedObject.discount_count;
-                                // console.log(changedObject);
+                        changedObject.image = selectedImageChangeBase64;
+
                         fetch(`${backendUrl}/api/goods/${id}`, {
                             method: 'PATCH',
                             body: JSON.stringify(changedObject)
@@ -156,7 +162,7 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
                                     initGoods();
                                     closeEditModal();
                                 }
-                        
+
                             })
                             .catch((err) => pageElements.errorModal.style.display = 'block');
                     })
@@ -176,6 +182,7 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
 
         product.id = pageElements.vendorCode_Id.textContent;
         product.discount = product.discount_count;
+        product.image = selectedImageAddBase64;
 
         fetch(`${backendUrl}/api/goods`, {
             method: 'POST',
@@ -219,7 +226,8 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
         reader.readAsDataURL(file);
     });
 
-    const imageFile = document.querySelector('#image');
+    const imageFile = document.querySelector('#imageAdd');
+    console.log(imageFile);
     imageFile.addEventListener('change', async () => {
         if (imageFile.files.length > 0) {
             const imgWrapper = document.querySelector('#img_wrapper');
@@ -231,8 +239,32 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
                 imgWrapper.textContent = '';
                 const img = document.createElement('img');
                 const result = await toBase64(imageFile.files[0]);
+
+                selectedImageAddBase64 = result;
                 img.src = result;
                 imgWrapper.append(img);
+            }
+        }
+    });
+
+    const imageFileEdit = document.querySelector('#imageEdit');
+    console.log(typeof imageFileEdit);
+    imageFileEdit.addEventListener('change', async () => {
+        if (imageFileEdit.files.length > 0) {
+            const imgWrapper = document.querySelector('#img_wrapperEdit');
+            if (imageFileEdit.files[0].size > 1000000) {
+                imgWrapper.textContent = 'Изображение не должно превышать размер 1 Мб';
+                imgWrapper.style.color = 'red';
+            }
+            else {
+                imgWrapper.textContent = '';
+                const img = document.createElement('img');
+                const result = await toBase64(imageFileEdit.files[0]);
+
+                selectedImageChangeBase64 = result;
+                img.src = result;
+                imgWrapper.append(img);
+                console.log(img);
             }
         }
     });
@@ -245,12 +277,12 @@ const backendUrl = 'https://evening-forest-92663.herokuapp.com';
     panel__input.addEventListener('input', () => {
         setTimeout(() => {
             fetch(`${backendUrl}/api/goods?search=${panel__input.value}`)
-            .then(resp => resp.json())
-            .then(data => {
-                goods = data;
-                renderGoods(goods);
-                computeTotalPriceOfGoods(goods);
-            }).catch((err) => console.log(err));
+                .then(resp => resp.json())
+                .then(data => {
+                    goods = data;
+                    renderGoods(goods);
+                    computeTotalPriceOfGoods(goods);
+                }).catch((err) => console.log(err));
             console.log();
         }, 300);
     });

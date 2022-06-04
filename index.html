@@ -151,7 +151,7 @@
             <input class="modal__input" type="number" name="price" id="price" required>
           </label>
 
-          <label tabindex="0" for="image" class="modal__label modal__label_file">Добавить изображение</label>
+          <label tabindex="0" for="imageAdd" class="modal__label modal__label_file">Добавить изображение</label>
           <input class="modal__file visually-hidden" tabindex="-1" type="file" name="image" id="imageAdd">
           
         </fieldset>
@@ -275,10 +275,12 @@
             <input class="modal__input" type="number" name="price" id="editPrice" required>
           </label>
 
-          <label tabindex="0" for="image" class="modal__label modal__label_file">Добавить изображение</label>
-          <input class="modal__file visually-hidden" tabindex="-1" type="file" name="image" id="image">
+          <label tabindex="0" for="imageEdit" class="modal__label modal__label_file">Добавить изображение</label>
+          <input class="modal__file visually-hidden" tabindex="-1" type="file" name="image" id="imageEdit">
         </fieldset>
+        <div id="img_wrapperEdit">
 
+        </div>
         <div class="modal__footer">
           <label class="modal__total">Итоговая стоимость:
             <output class="modal__total-price" name="total">$ 0.0</output>
